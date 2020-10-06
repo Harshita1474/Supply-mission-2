@@ -1,5 +1,5 @@
-var helicopterIMG, helicopterSprite, packageSprite,packageIMG;
-var packageBody,ground, redBox1,redBox2, redBox3;
+var helicopterImage, helicopter, package,packageImage;
+var packageBody,ground;
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
@@ -7,35 +7,43 @@ const Body = Matter.Body;
 
 function preload()
 {
-	helicopterIMG=loadImage("helicopter.png")
-	packageIMG=loadImage("package.png")
+	helicopterImage=loadImage("helicopter.png")
+	packageImage=loadImage("package.png")
 }
 
 function setup() {
 	createCanvas(800, 700);
 	rectMode(CENTER);
 	
-	var options={
-		restitution:0
-	}
 
-	packageSprite=createSprite(width/2, 80, 10,10,options);
-	packageSprite.addImage(packageIMG)
-	packageSprite.scale=0.2
+	package=createSprite(width/2, 80, 10,10);
+	package.addImage(packageImage)
+	package.scale=0.2
 
-	helicopterSprite=createSprite(width/2, 200, 10,10);
-	helicopterSprite.addImage(helicopterIMG)
-	helicopterSprite.scale=0.6
+	helicopter=createSprite(width/2, 200, 10,10);
+	helicopter.addImage(helicopterImage)
+	helicopter.scale=0.6
 
-	groundSprite=createSprite(width/2, height-10, width,10);
-	groundSprite.shapeColor=color("green")
+	ground=createSprite(width/2, height-35, width,10);
+	ground.shapeColor=color("green")
+
+	bottom = createSprite(width/2, 650, 200, 20);
+	bottom.shapeColor = "brown";
+
+	side1 = createSprite(300, 610, 20, 100);
+	side1.shapeColor = "brown";
+
+	side2 = createSprite(500, 610, 20, 100);
+	side2.shapeColor = "brown";
 
 
 	engine = Engine.create();
 	world = engine.world;
 
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.7, isStatic:true});
+	packageBody = Bodies.circle(width/2 , 200 , 5 , { isStatic:true});
 	World.add(world, packageBody);
+
+	
 	
 
 	//Create a Ground
@@ -44,25 +52,32 @@ function setup() {
 
 
 	Engine.run(engine);
-        redBox1= new Box(400,690,200,20);
-	redBox2= new Box(500,637,20,100);
-	redBox3= new Box(300,637,20,100);
+
+	
+  
 }
 
 
 function draw() {
+  
+  background("lightblue");
+  package.x= packageBody.position.x 
+  package.y= packageBody.position.y 
   rectMode(CENTER);
-  background(62,192,236);
-  packageSprite.x= packageBody.position.x 
-  packageSprite.y= packageBody.position.y 
+  //package.collide(bottom);
+  //package.collide(side1);
+  //package.collide(side2);
   drawSprites();
-  redBox1.display();
-  redBox2.display();
-  redBox3.display();
+ 
 }
 
 function keyPressed() {
  if (keyCode === DOWN_ARROW) {
-	Body.setStatic( packageBody , false);
+	// Look at the hints in the document and understand how to make the package body fall only on
+
+	Matter.Body.setStatic(packageBody, false);
+
+	
+    
   }
 }
