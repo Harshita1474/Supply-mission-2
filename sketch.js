@@ -44,7 +44,7 @@ function setup() {
 
 
 	Engine.run(engine);
-    redBox1= new Box(400,677,200,20);
+        redBox1= new Box(400,690,200,20);
 	redBox2= new Box(500,637,20,100);
 	redBox3= new Box(300,637,20,100);
 }
